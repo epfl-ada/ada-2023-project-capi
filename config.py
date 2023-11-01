@@ -1,0 +1,1 @@
+PATH_TO_DATA = r"." # path to the folder containing the raw data

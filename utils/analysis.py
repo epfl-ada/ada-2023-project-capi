@@ -2,6 +2,7 @@
 
 import networkx as nx
 import matplotlib.pyplot as plt
+from scipy import stats 
 
 def visualize_article_connections_per_category(connections, description):
   graph = nx.DiGraph()
@@ -24,3 +25,8 @@ def visualize_article_connections_per_category(connections, description):
   nx.draw(graph, figure, with_labels=True, width=edge_widths, edge_color='gray', arrows=True)
   plt.title(description)
   plt.show()
+
+def t_test_article_metrics(metrics, df_1, df_2):
+  for metric in metrics:
+    statistic, pvalue = stats.ttest_ind(df_1[metric], df_2[metric], nan_policy="omit", equal_var=False)
+    print("\t - {} - t-statistic: {:.3f}, p-value: {:.3f}".format(metric, statistic, pvalue))

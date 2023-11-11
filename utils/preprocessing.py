@@ -45,3 +45,16 @@ def merge_articles_categories(df, left_on, articles_categories):
   merged_df = merged_df.drop(['article_x', 'article_y'], axis=1)
   #display(merged_df.head())
   return merged_df
+
+def create_category_dictionaries(categories):
+  """Function to take a dataframe of categories and return dictionaries of categories & broad categories of articles."""
+  article_to_category = {}
+  article_to_broad_category = {}
+  for i in range(len(categories)):
+      if categories.iloc[i]["article"] in article_to_category:
+          article_to_category[categories.iloc[i]["article"]].append(categories.iloc[i]["category"])
+          article_to_broad_category[categories.iloc[i]["article"]].append(categories.iloc[i]["broad_category"])
+      else:
+          article_to_category[categories.iloc[i]["article"]] = [categories.iloc[i]["category"]]
+          article_to_broad_category[categories.iloc[i]["article"]] = [categories.iloc[i]["broad_category"]]
+  return article_to_category, article_to_broad_category

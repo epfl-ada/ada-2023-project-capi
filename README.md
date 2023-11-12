@@ -3,16 +3,32 @@
 
 ### Abstract: 
 A 150 word description of the project idea and goals. What’s the motivation behind your project? What story would you like to tell, and why?
+
+Goals:
+- Recommend games based on difficulty?
+- Infer ideas on how to write better, more understandable articles?
+- Identify gaps in knowledge
+
 ### Research Questions: 
-Overarching goal of understanding xyz.
 To this end, we want to explore the following questions, resp. hypotheses:
-- Sub-Question 1
-- Sub Quuestion 2
+- Are unfinished paths inherently harder to finish, based on objective measures?
+- Are there human factors that influence whether a path will be finished or not?
+- Can we predict whether a path will be finished or not to a reasonable degree of accuracy?
 
 ### Proposed additional datasets (if any): 
 None. Section to be deleted.
 ### Methods
-TBD. Expand. 
+Section to be expanded and clarified
+
+The proposed methodology to answer the research questions asked above involves the in-depth analysis of finished and unfinished paths, and their comparison. In particular, we have looked at (or will in the future):
+- Article metrics from the full wikipedia articles (such as stopword percentage, paragraph length, readability score, etc.)
+- The length of the shortest path possible to complete a game
+- Backclick rates
+- The connectedness of the path target in the graph of wikipedia articles
+- The categories that occur in the paths, and the source/target category pairs that occur in the two sets
+
+We use graphical elements (appropriately interactive or not) as well as statistical tests to measure the importance of above factors. These analyses allow the characterisation of the paths based on human and non-human factors. These can then be used as regressors in a logistic regression to predict probabilities on whether a game will be finished or not. We can then use these results to infer the relative importance of the regressors to the completion of a game, which may then be used to make recommendations addressing the goals of this project.
+
 
 ### Proposed timeline
 Our timeline split across the workstreams on Code / Analysis and Data Story is represented in the following table. The week numbers start after the P2 Milestone (i.e. Week 1 is the first week after the P2 deadline).

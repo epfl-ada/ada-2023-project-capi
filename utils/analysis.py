@@ -4,8 +4,12 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from scipy import stats 
 
-def visualize_article_connections_per_category(connections, description):
+def visualize_article_connections_per_category(connections, articles_categories, description):
   graph = nx.DiGraph()
+  
+  for _, node in articles_categories.iterrows():
+    graph.add_node(node["broad_category"])
+
   for _, row in connections.iterrows():
     start_category = row['start_broad_category']
     end_category = row['end_broad_category']

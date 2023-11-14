@@ -43,6 +43,8 @@ def merge_articles_categories(df, left_on, articles_categories):
   })
 
   merged_df = merged_df.drop(['article_x', 'article_y'], axis=1)
+  merged_df = merged_df.dropna(subset=["start_broad_category", "end_broad_category"])
+  merged_df = merged_df.sort_values(by=["start"], ascending=True)
   #display(merged_df.head())
   return merged_df
 

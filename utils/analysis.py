@@ -7,11 +7,11 @@ from collections import Counter
 
 
 def visualize_article_connections_per_category(
-    connections, articles_categories, description
+    connections, nodes, description
 ):
     graph = nx.DiGraph()
 
-    for _, node in articles_categories.iterrows():
+    for _, node in nodes.iterrows():
         graph.add_node(node["broad_category"])
 
     for _, row in connections.iterrows():
@@ -29,10 +29,10 @@ def visualize_article_connections_per_category(
         (weight - min_edge_weight) / (max_edge_weight - min_edge_weight)
         for weight in edge_weights
     ]
-    edge_widths = [weight * 4 for weight in normalized_edge_weights]
+    edge_widths = [weight * 5 for weight in normalized_edge_weights]
 
     figure = nx.shell_layout(graph)
-    plt.figure(figsize=(8, 8))
+    plt.figure(figsize=(10, 10))
     nx.draw(
         graph,
         figure,

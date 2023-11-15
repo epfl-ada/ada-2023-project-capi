@@ -35,6 +35,10 @@ def t_test_article_metrics(metrics, df_1, df_2):
   for metric in metrics:
     statistic, pvalue = stats.ttest_ind(df_1[metric], df_2[metric], nan_policy="omit", equal_var=False)
     print("\t - {} - t-statistic: {:.3f}, p-value: {:.3f}".format(metric, statistic, pvalue))
+  
+def simple_t_test(dist1, dist2):
+  statistic, pvalue = stats.ttest_ind(dist1, dist2, nan_policy="omit", equal_var=False)
+  print("t-statistic: {:.3f}, p-value: {:.3f}".format(statistic, pvalue))
 
 def sorted_category_counts(df, category_dict):
   all_target_broad_categories = [

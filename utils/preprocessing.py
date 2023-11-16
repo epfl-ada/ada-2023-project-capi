@@ -60,7 +60,12 @@ def merge_articles_categories(df, left_on, articles_categories):
 
 
 def create_category_dictionaries(categories):
-    """Function to take a dataframe of categories and return dictionaries of categories & broad categories of articles."""
+    '''
+    Function to create dictionaries of categories & broad categories of articles.
+    :param categories: Dataframe containing the categories & broad categories of articles.
+    :return article_to_category: Dictionary mapping article names to categories.
+    :return article_to_broad_category: Dictionary mapping article names to broad categories.
+    '''
     article_to_category = {}
     article_to_broad_category = {}
     for i in range(len(categories)):

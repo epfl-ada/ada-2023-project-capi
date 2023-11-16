@@ -58,6 +58,11 @@ def t_test_article_metrics(metrics, df_1, df_2):
 
 
 def simple_t_test(dist1, dist2):
+    '''
+    Function to perform a simple t-test and print out the results in a readable format.
+    :param dist1: First of the two distributions going into the t-test.
+    :param dist2: Second of the two distributions going into the t-test.
+    '''
     statistic, pvalue = stats.ttest_ind(
         dist1, dist2, nan_policy="omit", equal_var=False
     )
@@ -65,13 +70,20 @@ def simple_t_test(dist1, dist2):
 
 
 def sorted_category_counts(df, category_dict):
-    all_target_broad_categories = [
+    '''
+    Function to create a dictionary of the counts of the categories present in the targets in a dataframe, 
+    and sort this dictionary alphabetically.
+    :param df: Dataframe in which the targets in question are found.
+    :param category_dict: Dictionary for mapping article names to categories.
+    :return sorted_cats: Dictionary of the counts of the categories sorted alphabetically by category.
+    '''
+    all_target_categories = [
         category_dict[target] for target in df["target"] if target in category_dict
     ]
-    all_target_broad_categories = [
-        item for sublist in all_target_broad_categories for item in sublist
+    all_target_categories = [
+        item for sublist in all_target_categories for item in sublist
     ]
-    count_cats_finished_target = Counter(all_target_broad_categories)
+    count_cats_finished_target = Counter(all_target_categories)
     keys_finished = list(count_cats_finished_target.keys())
     keys_finished.sort()
     sorted_cats = {i: count_cats_finished_target[i] for i in keys_finished}
@@ -79,6 +91,14 @@ def sorted_category_counts(df, category_dict):
 
 
 def shortest_path_find(df, articles, shortest_paths):
+    '''
+    Function to manually find the shortest possible path length in a game.
+    :param df: Dataframe containg the games in question.
+    :param articles: Dataframe of the article names.
+    :param shortest_paths: Square matrix containg the length of the shortest paths between articles.
+    :return shortest_unfinished: List of the shortest possible path lengths of the games in df.
+    :return not_found: Integer of the number of shortest paths that could not be found in 'shortest_paths'.
+    '''
     shortest_unfinished = []
     not_found = 0
     for i in range(len(df)):

@@ -9,6 +9,11 @@ from collections import Counter
 def visualize_article_connections_per_category(
     connections, nodes, description
 ):
+    '''
+    Function to plot a network (vertices: article categories, edges: strength of connection)
+    :param connections: Edges.
+    :param nodes: Vertices.
+    '''
     graph = nx.DiGraph()
 
     for _, node in nodes.iterrows():
@@ -45,10 +50,16 @@ def visualize_article_connections_per_category(
     plt.show()
 
 
-def t_test_article_metrics(metrics, df_1, df_2):
+def t_test_article_metrics(metrics, dist1, dist2):
+    '''
+    Function to perform a simple t-test on article metrics and print out the results in a readable format.
+    :param metrics: Article metric on which the t-test will be performed.
+    :param dist1: First of the two distributions going into the t-test.
+    :param dist2: Second of the two distributions going into the t-test.
+    '''
     for metric in metrics:
         statistic, pvalue = stats.ttest_ind(
-            df_1[metric], df_2[metric], nan_policy="omit", equal_var=False
+            dist1[metric], dist2[metric], nan_policy="omit", equal_var=False
         )
         print(
             "\t - {} - t-statistic: {:.3f}, p-value: {:.3f}".format(

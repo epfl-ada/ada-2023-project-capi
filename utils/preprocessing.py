@@ -32,6 +32,12 @@ def get_all_links(df, path_colname="path"):
 
 
 def merge_articles_categories(df, left_on, articles_categories):
+    '''
+    Function to merge article categories.
+    :param df: Dataframe to be merged on.
+    :param left_on: Specifying the column containing article names (used for merging).
+    :return merged_df: Merged dataframe.
+    '''
     merged_df = df.copy()
 
     merged_df = merged_df.merge(

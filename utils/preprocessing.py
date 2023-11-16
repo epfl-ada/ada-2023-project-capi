@@ -2,34 +2,6 @@
 
 import pandas as pd
 
-# functions to get all links between articles
-from itertools import tee
-
-
-def pairwise(iterable):
-    # from python docs - will be introduced in version 3.10
-    # pairwise('ABCDEFG') --> AB BC CD DE EF FG
-    a, b = tee(iterable)
-    next(b, None)
-    return zip(a, b)
-
-
-def get_all_links(df, path_colname="path"):
-    edge_counter = {}
-    for _, row in df.iterrows():
-        links = row["path"]
-        edges = list(pairwise(links))
-
-        for edge in edges:
-            if edge in edge_counter:
-                edge_counter[edge] += 1
-            else:
-                edge_counter[edge] = 1
-
-    out = pd.Series(edge_counter).reset_index()
-    out.columns = ["source", "target", "weight"]
-    return out
-
 
 def merge_articles_categories(df, left_on, articles_categories):
     '''

@@ -15,7 +15,7 @@ We want to further explore the following topics (“research” subquestions) to
 3. Objective game difficulty and graph structure
 4. Individual player behaviour 
 
-### Methods
+### Methods:
 #### 1. Data Processing and Exploration
 
 To answer our research questions, we are mainly relying on the finished paths (n=51,318) and unfinished paths (n=24,875) datasets, but also the categories and links datasets, the network graph and the shortest path matrix. We initially conduct data cleaning (e.g., removing URL encoding from path and article names). To answer research subquestion 2, we also process the plaintext Wikipedia articles and extract article metrics (e.g., readability score, word count; using NLTK and textstat packages, see the notebook for details).

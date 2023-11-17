@@ -6,14 +6,12 @@ from scipy import stats
 from collections import Counter
 
 
-def visualize_article_connections_per_category(
-    connections, nodes, description
-):
-    '''
+def visualize_article_connections_per_category(connections, nodes, description):
+    """
     Function to plot a network (vertices: article categories, edges: strength of connection)
     :param connections: Edges.
     :param nodes: Vertices.
-    '''
+    """
     graph = nx.DiGraph()
 
     for _, node in nodes.iterrows():
@@ -51,12 +49,12 @@ def visualize_article_connections_per_category(
 
 
 def t_test_article_metrics(metrics, dist1, dist2):
-    '''
+    """
     Function to perform a simple t-test on article metrics and print out the results in a readable format.
     :param metrics: Article metric on which the t-test will be performed.
     :param dist1: First of the two distributions going into the t-test.
     :param dist2: Second of the two distributions going into the t-test.
-    '''
+    """
     for metric in metrics:
         statistic, pvalue = stats.ttest_ind(
             dist1[metric], dist2[metric], nan_policy="omit", equal_var=False
@@ -69,11 +67,11 @@ def t_test_article_metrics(metrics, dist1, dist2):
 
 
 def simple_t_test(dist1, dist2):
-    '''
+    """
     Function to perform a simple t-test and print out the results in a readable format.
     :param dist1: First of the two distributions going into the t-test.
     :param dist2: Second of the two distributions going into the t-test.
-    '''
+    """
     statistic, pvalue = stats.ttest_ind(
         dist1, dist2, nan_policy="omit", equal_var=False
     )
@@ -81,13 +79,13 @@ def simple_t_test(dist1, dist2):
 
 
 def sorted_category_counts(df, category_dict):
-    '''
-    Function to create a dictionary of the counts of the categories present in the targets in a dataframe, 
+    """
+    Function to create a dictionary of the counts of the categories present in the targets in a dataframe,
     and sort this dictionary alphabetically.
     :param df: Dataframe in which the targets in question are found.
     :param category_dict: Dictionary for mapping article names to categories.
     :return sorted_cats: Dictionary of the counts of the categories sorted alphabetically by category.
-    '''
+    """
     all_target_categories = [
         category_dict[target] for target in df["target"] if target in category_dict
     ]
@@ -102,14 +100,14 @@ def sorted_category_counts(df, category_dict):
 
 
 def shortest_path_find(df, articles, shortest_paths):
-    '''
+    """
     Function to manually find the shortest possible path length in a game.
     :param df: Dataframe containg the games in question.
     :param articles: Dataframe of the article names.
     :param shortest_paths: Square matrix containg the length of the shortest paths between articles.
     :return shortest_unfinished: List of the shortest possible path lengths of the games in df.
     :return not_found: Integer of the number of shortest paths that could not be found in 'shortest_paths'.
-    '''
+    """
     shortest_unfinished = []
     not_found = 0
     for i in range(len(df)):

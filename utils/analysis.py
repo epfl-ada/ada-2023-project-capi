@@ -4,6 +4,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from scipy import stats
 from collections import Counter
+import numpy as np
 
 
 def visualize_article_connections_per_category(connections, nodes, description):
@@ -121,3 +122,42 @@ def shortest_path_find(df, articles, shortest_paths):
             shortest_unfinished.append(None)
             not_found += 1
     return shortest_unfinished, not_found
+
+def bootstrap_CI_prob_cat(data_f, data_u, cat, category_dict, iterations=1000):
+    """
+    Function to bootstrap the 95% confidence interval of the empirical likelihood that a target 
+    belonging to a certain category not being reached.
+    :param data_f: A Pandas Series of articles from the finished paths.
+    :param data_u: A Pandas Series of articles from the unfinished paths.
+    :param cat: Category name.
+    :param category_dict: Dictionary for mapping article names to categories.
+    :param iterations: The number of bootstrap samples to generate.
+    :return: A tuple representing the lower and upper bounds of the 95% confidence interval
+    """
+    finished_target_categories = [
+        category_dict[artic] for artic in data_f if artic in category_dict
+    ]
+    finished_target_categories = [
+        item for sublist in finished_target_categories for item in sublist
+    ]
+
+    unfinished_target_categories = [
+        category_dict[artic] for artic in data_u if artic in category_dict
+    ]
+    unfinished_target_categories = [
+        item for sublist in unfinished_target_categories for item in sublist
+    ]
+
+    means = np.zeros(iterations)
+
+    for i in range(iterations):
+        bootstrap_sample_f = np.random.choice(finished_target_categories, size=len(finished_target_categories), replace=True)
+        bootstrap_sample_u = np.random.choice(unfinished_target_categories, size=len(unfinished_target_categories), replace=True)
+        count_cats_sample_f = Counter(bootstrap_sample_f)
+        count_cats_sample_u = Counter(bootstrap_sample_u)
+        means[i] = count_cats_sample_u[cat] / (count_cats_sample_u[cat] + count_cats_sample_f[cat])
+        
+    lower_bound = np.percentile(means, 2.5)
+    upper_bound = np.percentile(means, 97.5)
+    
+    return (lower_bound, upper_bound)

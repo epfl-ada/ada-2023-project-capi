@@ -7,7 +7,7 @@ from collections import Counter
 import numpy as np
 
 
-def visualize_article_connections_per_category(connections, nodes, description):
+def visualize_article_connections_per_category(connections, nodes, description, edge_widths=None):
     """
     Function to plot a network (vertices: article categories, edges: strength of connection)
     :param connections: Edges.
@@ -26,20 +26,20 @@ def visualize_article_connections_per_category(connections, nodes, description):
         else:
             graph.add_edge(start_category, end_category, weight=1)
 
-    edge_weights = [graph[u][v]["weight"] for u, v in graph.edges()]
-    max_edge_weight = max(edge_weights)
-    min_edge_weight = min(edge_weights)
-    normalized_edge_weights = [
-        (weight - min_edge_weight) / (max_edge_weight - min_edge_weight)
-        for weight in edge_weights
-    ]
-    edge_widths = [weight * 5 for weight in normalized_edge_weights]
+    if edge_widths is None:
+        edge_weights = [graph[u][v]["weight"] for u, v in graph.edges()]
+        max_edge_weight = max(edge_weights)
+        min_edge_weight = min(edge_weights)
+        normalized_edge_weights = [
+            (weight - min_edge_weight) / (max_edge_weight - min_edge_weight)
+            for weight in edge_weights
+        ]
+        edge_widths = [weight * 5 for weight in normalized_edge_weights]
 
-    figure = nx.shell_layout(graph)
     plt.figure(figsize=(10, 10))
     nx.draw(
         graph,
-        figure,
+        pos=nx.shell_layout(graph),
         with_labels=True,
         width=edge_widths,
         edge_color="gray",
@@ -47,6 +47,8 @@ def visualize_article_connections_per_category(connections, nodes, description):
     )
     plt.title(description)
     plt.show()
+
+    return graph, edge_widths
 
 
 def t_test_article_metrics(metrics, dist1, dist2):

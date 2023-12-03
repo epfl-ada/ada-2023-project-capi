@@ -79,16 +79,17 @@ def simple_t_test(dist1, dist2):
     print("t-statistic: {:.3f}, p-value: {:.3f}".format(statistic, pvalue))
 
 
-def sorted_category_counts(df, category_dict):
+def sorted_category_counts(df, category_dict, part="target"):
     """
     Function to create a dictionary of the counts of the categories present in the targets in a dataframe,
     and sort this dictionary alphabetically.
     :param df: Dataframe in which the targets in question are found.
     :param category_dict: Dictionary for mapping article names to categories.
+    :param part: Part of the path, can be start/target.
     :return sorted_cats: Dictionary of the counts of the categories sorted alphabetically by category.
     """
     all_target_categories = [
-        category_dict[target] for target in df["target"] if target in category_dict
+        category_dict[target] for target in df[part] if target in category_dict
     ]
     all_target_categories = [
         item for sublist in all_target_categories for item in sublist

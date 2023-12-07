@@ -22,12 +22,12 @@ def visualize_article_connections_per_category(connections, nodes, description, 
         start_category = row["start_broad_category"]
         end_category = row["end_broad_category"]
         if graph.has_edge(start_category, end_category):
-            graph[start_category][end_category]["weight"] += 1
+            graph[start_category][end_category]["size"] += 1
         else:
-            graph.add_edge(start_category, end_category, weight=1)
+            graph.add_edge(start_category, end_category, size=1)
 
     if edge_widths is None:
-        edge_weights = [graph[u][v]["weight"] for u, v in graph.edges()]
+        edge_weights = [graph[u][v]["size"] for u, v in graph.edges()]
         max_edge_weight = max(edge_weights)
         min_edge_weight = min(edge_weights)
         normalized_edge_weights = [

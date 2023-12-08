@@ -1,7 +1,7 @@
 """ Module to store all functions related to data preprocessing """
 
 import pandas as pd
-
+import pycountry
 
 def merge_articles_categories(df, left_on, articles_categories):
     """
@@ -62,6 +62,60 @@ def create_category_dictionaries(categories):
                 categories.iloc[i]["broad_category"]
             ]
     return article_to_category, article_to_broad_category
+
+
+def country_codes_dict():
+    """
+    Function to create a dictionary of country codes.
+    :return country_codes: Dictionary mapping country names to iso-alpha-3 codes.
+    """
+    country_codes = {}
+    for country in pycountry.countries:
+        country_codes[country.name] = country.alpha_3
+
+    country_codes["Dominican_Republic"] = "DOM"
+    country_codes["Costa_Rica"] = "CRI"
+    country_codes["Venezuela"] = "VEN"
+    country_codes["Bolivia"] = "BOL"
+    country_codes["El_Salvador"] = "SLV"
+    country_codes["United_States"] = "USA"
+    country_codes["United_Kingdom"] = "GBR"
+    country_codes["Czech_Republic"] = "CZE"
+    country_codes["Turkey"] = "TUR"
+    country_codes["Bosnia_and_Herzegovina"] = "BIH"
+    country_codes["Moldova"] = "MDA"
+    country_codes["Russia"] = "RUS"
+    country_codes["Russia"] = "RUS"
+    country_codes["Iran"] = "IRN"
+    country_codes["Saudi_Arabia"] = "SAU"
+    country_codes["Syria"] = "SYR"
+    country_codes["Mongolia"] = "MNG"
+    country_codes["North_Korea"] = "PRK"
+    country_codes["South_Korea"] = "KOR"
+    country_codes["Vietnam"] = "VNM"
+    country_codes["Laos"] = "LAO"
+    country_codes["Sri_Lanka"] = "LKA"
+    country_codes["Taiwan"] = "TWN"
+    country_codes["Papua_New_Guinea"] = "PNG"
+    country_codes["New_Zealand"] = "NZL"
+    country_codes["Burkina_Faso"] = "BFA"
+    country_codes["Côte_d'Ivoire"] = "CIV"
+    country_codes["The_Gambia"] = "GMB"
+    country_codes["Sierra_Leone"] = "SLE"
+    country_codes["Central_African_Republic"] = "CAF"
+    country_codes["South_Sudan"] = "SSD"
+    country_codes["Tanzania"] = "TZA"
+    country_codes["South_Africa"] = "ZAF"
+    country_codes["Puerto_Rico"] = "PRI"
+    country_codes["The_Bahamas"] = "BHS"
+    country_codes["United_Arab_Emirates"] = "ARE"
+    country_codes["Antarctica"] = "ATA"
+    country_codes["Equatorial_Guinea"] = "GNQ"
+    country_codes["Georgia_(country)"] = "GEO"
+    country_codes["Palestinian_territories"] = "PSE"
+    country_codes["Republic_of_Macedonia"] = "MKD"
+
+    return country_codes
 
 
 def get_backclicked_pages(path):

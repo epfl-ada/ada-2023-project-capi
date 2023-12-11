@@ -6,7 +6,8 @@ from scipy import stats
 from collections import Counter
 import numpy as np
 import pandas as pd
-
+from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score, f1_score, precision_score, recall_score
+import matplotlib.colors as colors
 
 def visualize_article_connections_per_category(connections, nodes, description, edge_widths=None):
     """
@@ -181,7 +182,32 @@ def create_coefplot(model_summary, ):
     temp_df = temp_df.sort_values(by="coef")
     ax.axvline(0, c="darkgrey", linestyle="--")
     ax.errorbar(y="variable", x="coef", xerr="error", c="white", data=temp_df, ecolor="grey", fmt="none" )
-    ax.scatter(y="variable", x="coef", data=temp_df, s=120, marker="s", c="coef", cmap="RdYlGn_r")
+    ax.scatter(y="variable", x="coef", data=temp_df, s=120, marker="s", c="coef", norm=colors.CenteredNorm(), cmap="RdYlGn_r")
     plt.tight_layout()
 
     return fig, ax
+
+def evaluate_predictions(y_test, y_pred):
+    """
+    Function to print out classification metrics and display confusion matrices.
+    :param y_test: array of predicted class labels
+    :param y_test: array of ground truths
+    :return: None (printouts and plots)
+    """
+    print(" Accuracy: {:.4f} \n F1-Score: {:.4f} \n Precision: {:.4f}\n Recall: {:.4f}".format(
+            accuracy_score(y_test, y_pred),
+            f1_score(y_test, y_pred),
+            precision_score(y_test, y_pred),
+            recall_score(y_test, y_pred),
+        )  
+    )
+
+    # Plot Confusion Matrices
+    fig, axes = plt.subplots(1, 3, figsize=(14, 8))
+    ConfusionMatrixDisplay.from_predictions(y_test, y_pred, ax=axes[0])
+    axes[0].set_title("Raw Counts")
+    ConfusionMatrixDisplay.from_predictions(y_test, y_pred, normalize="true", ax=axes[1])
+    axes[1].set_title("Normalized by True Values (Per Class Recall)")
+    ConfusionMatrixDisplay.from_predictions(y_test, y_pred, normalize="pred", ax=axes[2])
+    axes[2].set_title("Normalized by True Values (Per Class Recall)")
+    fig.show()

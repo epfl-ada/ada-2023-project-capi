@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from scipy import stats
 from collections import Counter
 import numpy as np
+import pandas as pd
 
 
 def visualize_article_connections_per_category(connections, nodes, description, edge_widths=None):
@@ -164,3 +165,23 @@ def bootstrap_CI_prob_cat(data_f, data_u, cat, category_dict, iterations=1000):
     upper_bound = np.percentile(means, 97.5)
     
     return (lower_bound, upper_bound)
+
+def create_coefplot(model_summary, ):
+    """
+    Function to plot the coefficient of a statsmodel regression summary, including confidence intervals.
+    :param model_summary: a statsmodel summary object
+    :return: A tuple of plt figure and axes
+    """
+    err_series = model_summary.params - model_summary.conf_int()[0]
+    temp_df = pd.DataFrame({"coef": model_summary.params.values[1:],
+                            "error": err_series.values[1:], 
+                            "variable": err_series.index.values[1:]})
+
+    fig, ax = plt.subplots(1, 1, figsize=(14, 8))
+    temp_df = temp_df.sort_values(by="coef")
+    ax.axvline(0, c="darkgrey", linestyle="--")
+    ax.errorbar(y="variable", x="coef", xerr="error", c="white", data=temp_df, ecolor="grey", fmt="none" )
+    ax.scatter(y="variable", x="coef", data=temp_df, s=120, marker="s", c="coef", cmap="RdYlGn_r")
+    plt.tight_layout()
+
+    return fig, ax

@@ -26,7 +26,7 @@ In a preliminary data exploration, we noticed the following:
 * 9 games had no shortest path possible according to the provided matrix, and 31 games had a target article with 0 in-degree. 
 * Unfinished paths have data from 2011, while finished paths are available from 2008.
 
-For P3, we will think about whether we need to exclude certain games from the analysis.
+<!-- For P3, we will think about whether we need to exclude certain games from the analysis. -->
 
 ### 2. Individual analyses
 
@@ -35,7 +35,7 @@ To prepare our data for the overall statistical analysis, we calculate and analy
   1. ***Research Subquestion 1: Categories***
 
       Some categories may be more difficult for people to engage with (e.g., geography is in general more accessible than mathematics). We first extract the broadest possible category label for each article to avoid an unnecessarily large number of classes, giving 15 distinct categories. We use the empirical likelihood of a target belonging to a certain category not being reached successfully in a game. This is the probability of a game being unfinished ($u$) for a given category $i$, and is calculated as:
-      $\Bbb{P}(u|i) = \frac{\text{num category i in unfinished paths target}}{\text{num category i in target}}$ .
+      $\Bbb{P}(u|i) = \frac{\text{num category i in unfinished paths target}}{\text{num category i in target}}$. We further explore the connections between different source and target categories, to see which pairings lead to easier or more difficult games.
 
   2. ***Research Subquestion 2: Article Metrics***
   
@@ -43,7 +43,7 @@ To prepare our data for the overall statistical analysis, we calculate and analy
 
   3. ***Research Subquestion 3: Path difficulty***
 
-      To answer the question of whether some games are inherently more difficult than others, we calculate three more metrics. First, we look at the out-degrees (not currently implemented) and in-degrees of the source and target articles respectively, hypothesising that starts with a lower out-degree or targets with a lower in-degree are harder to reach. Similarly, we look up the shortest possible path for each game. 
+      To answer the question of whether some games are inherently more difficult than others, we calculate three more metrics. First, we look at the out-degrees and in-degrees of the source and target articles respectively, hypothesising that starts with a lower out-degree or targets with a lower in-degree are harder to reach. Similarly, we look up the shortest possible path for each game. 
 
       We compare these metrics between finished and unfinished through plots, as well as an appropriate t-test to compare the two groups (depending on the distributions). 
 
@@ -77,5 +77,5 @@ Our timeline and planned milestone are split across the two work streams on *Ana
 * **[Matteo](https://github.com/matsant01)**: Data exploration and analysis (individual player behaviour), visualizations
 
 
-### Questions for TAs (optional): 
-Add here any questions you have for us related to the proposed project.
+<!-- ### Questions for TAs (optional):  -->
+<!-- Add here any questions you have for us related to the proposed project.  -->

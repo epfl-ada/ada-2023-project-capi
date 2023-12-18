@@ -169,7 +169,7 @@ def bootstrap_CI_prob_cat(data_f, data_u, cat, category_dict, iterations=1000):
 
 def create_coefplot(model_summary, ):
     """
-    Function to plot the coefficient of a statsmodel regression summary, including confidence intervals.
+    Function to plot the coefficient of a statsmodel regression summary, including confidence intervals in the defined variable groups.
     :param model_summary: a statsmodel summary object
     :return: A tuple of plt figure and axes
     """
@@ -177,12 +177,140 @@ def create_coefplot(model_summary, ):
     temp_df = pd.DataFrame({"coef": model_summary.params.values[1:],
                             "error": err_series.values[1:], 
                             "variable": err_series.index.values[1:]})
+    
 
-    fig, ax = plt.subplots(1, 1, figsize=(14, 8))
+    CATEGORIES = {'Start Category: Business_Studies': 'Start Categories',
+    'Start Category: Citizenship': 'Start Categories',
+    'Start Category: Countries': 'Start Categories',
+    'Start Category: Design_and_Technology': 'Start Categories',
+    'Start Category: Everyday_life': 'Start Categories',
+    'Start Category: Geography': 'Start Categories',
+    'Start Category: History': 'Start Categories',
+    'Start Category: IT': 'Start Categories',
+    'Start Category: Language_and_literature': 'Start Categories',
+    'Start Category: Mathematics': 'Start Categories',
+    'Start Category: Music': 'Start Categories',
+    'Start Category: People': 'Start Categories',
+    'Start Category: Religion': 'Start Categories',
+    'Start Category: Science': 'Start Categories',
+    'Target Category: Business_Studies': 'Target Categories',
+    'Target Category: Citizenship': 'Target Categories',
+    'Target Category: Countries': 'Target Categories',
+    'Target Category: Design_and_Technology': 'Target Categories',
+    'Target Category: Everyday_life': 'Target Categories',
+    'Target Category: Geography': 'Target Categories',
+    'Target Category: History': 'Target Categories',
+    'Target Category: IT': 'Target Categories',
+    'Target Category: Language_and_literature': 'Target Categories',
+    'Target Category: Mathematics': 'Target Categories',
+    'Target Category: Music': 'Target Categories',
+    'Target Category: People': 'Target Categories',
+    'Target Category: Religion': 'Target Categories',
+    'Target Category: Science': 'Target Categories',
+    'Start Article: Avg. Sentence Length': 'Article Metrics',
+    'Start Article: Avg. Word Length': 'Article Metrics',
+    'Start Article: Paragraph Count': 'Article Metrics',
+    'Start Article: Readability Score': 'Article Metrics',
+    'Start Article: Stopword Percentage': 'Article Metrics',
+    'Target Article: Avg. Sentence Length': 'Article Metrics',
+    'Target Article: Avg. Word Length': 'Article Metrics',
+    'Target Article: Paragraph Count': 'Article Metrics',
+    'Target Article: Readability Score': 'Article Metrics',
+    'Target Article: Stopword Percentage': 'Article Metrics',
+    'Links from Source': 'Game Difficulty',
+    'Links to Target': 'Game Difficulty',
+    'Shortest Possible Path': 'Game Difficulty',
+    'Semantic Similarity Start Target': 'Game Difficulty'}
+    MAPPING = {
+    # Starting Categories    
+    'start_broad_category[T.Business_Studies]': 'Start Category: Business_Studies',
+    'start_broad_category[T.Citizenship]': 'Start Category: Citizenship',
+    'start_broad_category[T.Countries]': 'Start Category: Countries',
+    'start_broad_category[T.Design_and_Technology]': 'Start Category: Design_and_Technology',
+    'start_broad_category[T.Everyday_life]': 'Start Category: Everyday_life',
+    'start_broad_category[T.Geography]': 'Start Category: Geography',
+    'start_broad_category[T.History]': 'Start Category: History',
+    'start_broad_category[T.IT]': 'Start Category: IT',
+    'start_broad_category[T.Language_and_literature]': 'Start Category: Language_and_literature',
+    'start_broad_category[T.Mathematics]': 'Start Category: Mathematics',
+    'start_broad_category[T.Music]': 'Start Category: Music',
+    'start_broad_category[T.People]': 'Start Category: People',
+    'start_broad_category[T.Religion]': 'Start Category: Religion',
+    'start_broad_category[T.Science]': 'Start Category: Science',
+
+    # Ending Categories
+    'target_broad_category[T.Business_Studies]': 'Target Category: Business_Studies',
+    'target_broad_category[T.Citizenship]': 'Target Category: Citizenship',
+    'target_broad_category[T.Countries]': 'Target Category: Countries',
+    'target_broad_category[T.Design_and_Technology]': 'Target Category: Design_and_Technology',
+    'target_broad_category[T.Everyday_life]': 'Target Category: Everyday_life',
+    'target_broad_category[T.Geography]': 'Target Category: Geography',
+    'target_broad_category[T.History]': 'Target Category: History',
+    'target_broad_category[T.IT]': 'Target Category: IT',
+    'target_broad_category[T.Language_and_literature]': 'Target Category: Language_and_literature',
+    'target_broad_category[T.Mathematics]': 'Target Category: Mathematics',
+    'target_broad_category[T.Music]': 'Target Category: Music',
+    'target_broad_category[T.People]': 'Target Category: People',
+    'target_broad_category[T.Religion]': 'Target Category: Religion',
+    'target_broad_category[T.Science]': 'Target Category: Science',
+
+    # article metrics
+    'start_avg_sent_length': 'Start Article: Avg. Sentence Length',
+    'start_avg_word_length': 'Start Article: Avg. Word Length',
+    'start_paragraph_count': 'Start Article: Paragraph Count',
+    'start_readability_score': 'Start Article: Readability Score',
+    'start_stopword_percentage': 'Start Article: Stopword Percentage',
+
+    'target_avg_sent_length': 'Target Article: Avg. Sentence Length',
+    'target_avg_word_length': 'Target Article: Avg. Word Length',
+    'target_paragraph_count': 'Target Article: Paragraph Count',
+    'target_readability_score': 'Target Article: Readability Score',
+    'target_stopword_percentage': 'Target Article: Stopword Percentage',
+
+    # game difficulty
+    'links_from_source': 'Links from Source',
+    'links_to_target': 'Links to Target',
+    'shortest_path_length': 'Shortest Possible Path',
+    'sims_start_target': 'Semantic Similarity Start Target'}
+
+    temp_df["clean_name"] = temp_df.variable.map(MAPPING)
+    temp_df["group"] = temp_df.clean_name.map(CATEGORIES)
+
+    # sort by coefficent
     temp_df = temp_df.sort_values(by="coef")
-    ax.axvline(0, c="darkgrey", linestyle="--")
-    ax.errorbar(y="variable", x="coef", xerr="error", c="white", data=temp_df, ecolor="grey", fmt="none" )
-    ax.scatter(y="variable", x="coef", data=temp_df, s=120, marker="s", c="coef", norm=colors.CenteredNorm(), cmap="RdYlGn_r")
+
+    # make individual dfs for plotting
+    diff = temp_df[temp_df.group == "Game Difficulty"]
+    start = temp_df[temp_df.group == "Start Categories"]
+    target = temp_df[temp_df.group == "Target Categories"]
+    metrics = temp_df[temp_df.group == "Article Metrics"]
+
+    fig, ax = plt.subplots(4, 1, figsize=(14, 14), gridspec_kw={'height_ratios': [0.7, 2, 2.5, 2.5]}, sharex=True)
+
+    ax[0].axvline(0, c="darkgrey", linestyle="--")
+    ax[0].errorbar(y="clean_name", x="coef", xerr="error", c="white", data=diff, ecolor="grey", fmt="none" )
+    ax[0].scatter(y="clean_name", x="coef", data=diff, s=120, marker="s", c="coef", norm=colors.CenteredNorm(), cmap="RdYlGn_r")
+    ax[0].xaxis.set_tick_params(which='both', labelbottom=True)
+    ax[0].set_title("Game Difficulty")
+
+    ax[1].axvline(0, c="darkgrey", linestyle="--")
+    ax[1].errorbar(y="clean_name", x="coef", xerr="error", c="white", data=metrics, ecolor="grey", fmt="none" )
+    ax[1].scatter(y="clean_name", x="coef", data=metrics, s=120, marker="s", c="coef", norm=colors.CenteredNorm(), cmap="RdYlGn_r")
+    ax[1].xaxis.set_tick_params(which='both', labelbottom=True)
+    ax[1].set_title("Article Metrics")
+
+    ax[2].axvline(0, c="darkgrey", linestyle="--")
+    ax[2].errorbar(y="clean_name", x="coef", xerr="error", c="white", data=start, ecolor="grey", fmt="none" )
+    ax[2].scatter(y="clean_name", x="coef", data=start, s=120, marker="s", c="coef", norm=colors.CenteredNorm(), cmap="RdYlGn_r")
+    ax[2].xaxis.set_tick_params(which='both', labelbottom=True)
+    ax[2].set_title("Starting Categories")
+
+    ax[3].axvline(0, c="darkgrey", linestyle="--")
+    ax[3].errorbar(y="clean_name", x="coef", xerr="error", c="white", data=target, ecolor="grey", fmt="none" )
+    ax[3].scatter(y="clean_name", x="coef", data=target, s=120, marker="s", c="coef", norm=colors.CenteredNorm(), cmap="RdYlGn_r")
+    ax[3].xaxis.set_tick_params(which='both', labelbottom=True)
+    ax[3].set_title("Target Categories")
+
     plt.tight_layout()
 
     return fig, ax

@@ -1,4 +1,8 @@
 # Success or Failure? A comparative analysis of finished and unfinished Wikispeedia games
+*CAPI: Antonio Mari, Arda Civelekoğlu, Juan Garcia Giraldo, Luca Sbicego, Matteo Santelmo*
+
+## Datastory
+Please visit our datastory here: [Success or Failure?](https://antoniomari.github.io/ADA-CAPI-DataStory/)
 
 ## Abstract: 
 

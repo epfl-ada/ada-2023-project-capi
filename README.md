@@ -18,7 +18,7 @@ We want to further explore the following topics (“research” subquestions) to
 ## Methods:
 ### 1. Data Processing and Exploration
 
-To answer our research questions, we are mainly relying on the finished paths (n=51,318) and unfinished paths (n=24,875) datasets, but also the categories and links datasets, the network graph and the shortest path matrix. We initially conduct data cleaning (e.g., removing URL encoding from path and article names). To answer research subquestion 2, we also process the plaintext Wikipedia articles and extract article metrics (e.g., readability score, word count; using NLTK and textstat packages, see the notebook for details).
+To answer our research questions, we use the finished paths (n=51,318) and unfinished paths (n=24,875) datasets, but also the categories and links datasets, the network graph and the shortest path matrix. We initially conduct data cleaning (e.g., removing URL encoding from path and article names). To answer research subquestion 2, we also process the plaintext Wikipedia articles and extract article metrics (e.g., readability score, word count; using NLTK and textstat packages).
 
 In a preliminary data exploration, we noticed the following:
 * 11 finished and 5214 unfinished paths have length 1 (max. path length=435).
@@ -26,16 +26,16 @@ In a preliminary data exploration, we noticed the following:
 * 9 games had no shortest path possible according to the provided matrix, and 31 games had a target article with 0 in-degree. 
 * Unfinished paths have data from 2011, while finished paths are available from 2008.
 
-<!-- For P3, we will think about whether we need to exclude certain games from the analysis. -->
-
 ### 2. Individual analyses
 
-To prepare our data for the overall statistical analysis, we calculate and analyse a range of metrics regarding each of our four research subquestions. Please refer to our notebook for a discussion of initial results and more details.
+To prepare our data for the overall statistical analysis, we calculate and analyse a range of metrics regarding each of our four research subquestions. Please refer to our notebook for details.
 
   1. ***Research Subquestion 1: Categories***
 
-      Some categories may be more difficult for people to engage with (e.g., geography is in general more accessible than mathematics). We first extract the broadest possible category label for each article to avoid an unnecessarily large number of classes, giving 15 distinct categories. We use the empirical likelihood of a target belonging to a certain category not being reached successfully in a game. This is the probability of a game being unfinished ($u$) for a given category $i$, and is calculated as:
-      $\Bbb{P}(u|i) = \frac{\text{num category i in unfinished paths target}}{\text{num category i in target}}$. We further explore the connections between different source and target categories, to see which pairings lead to easier or more difficult games.
+      Some categories may be more difficult for people to engage with. We extract the broadest possible category label for each article to avoid an unnecessarily large number of classes, giving 15 distinct categories. We then use the empirical likelihood of a target belonging to a certain category not being reached successfully in a game. We further explore the connections between different source and target categories, to see which pairings lead to easier or more difficult games in a similar fashion.
+
+      <!-- This is the probability of a game being unfinished ($u$) for a given category $i$, and is calculated as:
+      $\Bbb{P}(u|i) = \frac{\text{num category i in unfinished paths target}}{\text{num category i in target}}$. -->
 
   2. ***Research Subquestion 2: Article Metrics***
   
@@ -43,37 +43,38 @@ To prepare our data for the overall statistical analysis, we calculate and analy
 
   3. ***Research Subquestion 3: Path difficulty***
 
-      To answer the question of whether some games are inherently more difficult than others, we calculate three more metrics. First, we look at the out-degrees and in-degrees of the source and target articles respectively, hypothesising that starts with a lower out-degree or targets with a lower in-degree are harder to reach. Similarly, we look up the shortest possible path for each game. 
-
-      We compare these metrics between finished and unfinished through plots, as well as an appropriate t-test to compare the two groups (depending on the distributions). 
+      We wish to see if some games are inherently more difficult. First, we look at the out-degrees and in-degrees of the source and target articles respectively, hypothesising that starts with a lower out-degree or targets with a lower in-degree make a game more difficult. Similarly, we look up the shortest possible path for each game. We compare these metrics between finished and unfinished paths using plots, as well as an appropriate t-test to compare the two groups (depending on the distributions). 
 
   4. ***Research Subquestion 4: Individual Player Behaviour***
   
-      We analyse in-game behavioural aspects like back-click usage (computing player’s aggregated back-click frequency), quitting tendencies (looking at the prior probability to quit), and category choice (how commonly articles of each category are used by the same player). Through statistical tests (like point-biserial correlation) we assess these factors’ correlations with quitting. 
+      We analyse in-game behavioural aspects like back-click usage (computing player’s aggregated back-click frequency), including the use of back-clicks across different categories. Through statistical tests (like point-biserial correlation) we assess such factors’ correlations with quitting. We further explore the semantic closeness of articles in paths, in particular focusing on how semantically close the player gets to the target article throughout their games in finished and unfinished paths.
       
 
 ### 3. Putting everything together: Logistic Regression
 
-To reach a conclusion for our datastory, we build a logistic regression model. This allows us to output a probability to predict if a game will be finished or abandoned (based on starting and ending categories, article metrics, objective difficulties of games, etc). This allows us to control for all factors and measure the relative strength of the effects (after standardisation). From the output, we can discuss statistically significant predictors and derive implications (e.g., which categories have a negative influence, are more readable start articles better etc.).
+To reach a conclusion for our datastory, we build a logistic regression model. This allows us to synthesise the above analysis output a probability to predict if a game will be finished or abandoned. This allows us to control for all factors and measure the relative strength of the effects (after standardisation). From the output, we can discuss statistically significant predictors and derive implications.
 
+### 4. Expanding upon the model: Machine Learning
 
-## Proposed timeline
+We expand upon the logistic regression model by training a Random Forest model which considers non-linearities and interaction effects. This model allows us to reach a level of predictive performance with an F1-score of 0.56 and an accuracy 0f 0.70. More importantly, it allows us to use Shapley values to better understand the real contributions of different factors to the probability of completion of a game according to the model.
+
+## Proposed timeline and internal milestones
 Our timeline and planned milestone are split across the two work streams on *Analysis* and *Data Story*:
 
 | Week #                   | Code / Analysis                                                                         | Data Story                                                              |
 |--------------------------|-----------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
-| 24.11.2023 / Week 1 | Executed proposed remaining individual analyses; implemented P2 Feedback.                    | Created website setup for data story. story                    |
-| 01.12.2023 / Week 2  | Created relevant (interactive) plots for data story; finalise logistic regression. | Structured and planned out data story.                              |
-| 8.12.2023 / Week 3  | Documented and cleaned code; expanded supporting analysis.                   | Integrated plots in data story; started writing data story. |
-| 15.12.2023 / Week 4 | Implemented last details and minor fixes.                                                 | Finalised draft of data story. story                                            |
-| 22.12.2023 / Week 5 | -                                                                                       | **Hand in:** proof-read data story.                          |
+| 24.11.2023 / Week 1 | << Work on homework 2 >>                    | Created website setup for data story.                    |
+| 01.12.2023 / Week 2  | Executed proposed remaining individual analyses; implemented P2 Feedback. | Structured and planned out data story.                              |
+| 8.12.2023 / Week 3  | Created relevant (interactive) plots for data story; finalised logistic regression, and implemented random forest model.                   | Integrated plots in data story; started writing data story. |
+| 15.12.2023 / Week 4 | Documented and cleaned code; expanded supporting analysis.                                                 | Finalised draft of data story.                                            |
+| 22.12.2023 / Week 5 | Implemented last details and minor fixes.                      | **Hand in:** proof-read data story.                          |
 
 
 ### Organization within the team:
 * **[Antonio](https://github.com/antoniomari):** Data exploration, website for data story, data story
 * **[Arda](https://github.com/arcivelekoglu):** Data exploration and analysis (objective difficulty, categories), data story
-* **[Juan](https://github.com/d23845jg):** Data exploration and analysis (article metrics), visualizations, master of the repo
-* **[Luca](https://github.com/lsbicego):** Data exploration and analysis (logistic regression), data story
+* **[Juan](https://github.com/d23845jg):** Data exploration and analysis (article metrics, categories), visualizations, master of the repo
+* **[Luca](https://github.com/lsbicego):** Data exploration and analysis (logistic regression, machine learning), data story
 * **[Matteo](https://github.com/matsant01)**: Data exploration and analysis (individual player behaviour), visualizations
 
 

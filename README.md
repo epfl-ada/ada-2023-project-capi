@@ -4,11 +4,11 @@
 ## Datastory
 You can view our datastory here: [Success or Failure?](https://antoniomari.github.io/ADA-CAPI-DataStory/)
 
-## Abstract: 
+## Abstract
 
 Humans tend to not be very persistent. Faced with difficult tasks, many opt to give up and pursue easier endeavours, instead of persevering through initial difficulties. In this context, we want to analyse the Wikispeedia dataset to study what makes people give up prematurely. Might it be that unfamiliar starting categories or seemingly far-away target articles make people give up? To study such factors, we conduct statistical analyses, honing in on a range of influential factors, before building a model for the likelihood of a game being abandoned prematurely. Our findings could help game-style environments (e.g., online educational platforms) enhance player retention and satisfaction (e.g., by adjusting levels/tasks). Moreover, this analysis can also reveal valuable insights into the human psyche, determining potential deterring factors of completing a task.
 
-## Research Questions: 
+## Research Questions
 To achieve these aims, our overarching research question is the following:
 
 ****What makes players give up a game of Wikispeedia?****
@@ -19,7 +19,7 @@ We want to further explore the following topics (“research” subquestions) to
 3. Objective game difficulty and graph structure
 4. Individual player behaviour 
 
-## Methods:
+## Methods
 ### 1. Data Processing and Exploration
 
 To answer our research questions, we use the finished paths (n=51,318) and unfinished paths (n=24,875) datasets, but also the categories and links datasets, the network graph and the shortest path matrix. We initially conduct data cleaning (e.g., removing URL encoding from path and article names). To answer research subquestion 2, we also process the plaintext Wikipedia articles and extract article metrics (e.g., readability score, word count; using NLTK and textstat packages).

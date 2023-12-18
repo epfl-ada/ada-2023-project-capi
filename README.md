@@ -2,7 +2,7 @@
 *CAPI: Antonio Mari, Arda Civelekoğlu, Juan Garcia Giraldo, Luca Sbicego, Matteo Santelmo*
 
 ## Datastory
-Please visit our datastory here: [Success or Failure?](https://antoniomari.github.io/ADA-CAPI-DataStory/)
+You can view our datastory here: [Success or Failure?](https://antoniomari.github.io/ADA-CAPI-DataStory/)
 
 ## Abstract: 
 

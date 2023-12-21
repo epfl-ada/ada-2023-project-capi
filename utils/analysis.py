@@ -167,7 +167,7 @@ def bootstrap_CI_prob_cat(data_f, data_u, cat, category_dict, iterations=1000):
     
     return (lower_bound, upper_bound)
 
-def create_coefplot(model_summary, ):
+def create_coefplot(model_summary, figsize=(14, 18), height_ratios=[0.7, 2.0, 2.5, 2.5]):
     """
     Function to plot the coefficient of a statsmodel regression summary, including confidence intervals in the defined variable groups.
     :param model_summary: a statsmodel summary object
@@ -272,6 +272,8 @@ def create_coefplot(model_summary, ):
     'links_to_target': 'Links to Target',
     'shortest_path_length': 'Shortest Possible Path',
     'sims_start_target': 'Semantic Similarity Start Target'}
+    TITLE_SIZE = 14
+    AXIS_SIZE = 12
 
     temp_df["clean_name"] = temp_df.variable.map(MAPPING)
     temp_df["group"] = temp_df.clean_name.map(CATEGORIES)
@@ -285,31 +287,35 @@ def create_coefplot(model_summary, ):
     target = temp_df[temp_df.group == "Target Categories"]
     metrics = temp_df[temp_df.group == "Article Metrics"]
 
-    fig, ax = plt.subplots(4, 1, figsize=(14, 14), gridspec_kw={'height_ratios': [0.7, 2, 2.5, 2.5]}, sharex=True)
+    fig, ax = plt.subplots(4, 1, figsize=figsize, gridspec_kw={'height_ratios': height_ratios}, sharex=True)
 
     ax[0].axvline(0, c="darkgrey", linestyle="--")
-    ax[0].errorbar(y="clean_name", x="coef", xerr="error", c="white", data=diff, ecolor="grey", fmt="none" )
     ax[0].scatter(y="clean_name", x="coef", data=diff, s=120, marker="s", c="coef", norm=colors.CenteredNorm(), cmap="RdYlGn_r")
+    ax[0].errorbar(y="clean_name", x="coef", xerr="error", c="white", data=diff, ecolor="grey", fmt="none" )
     ax[0].xaxis.set_tick_params(which='both', labelbottom=True)
-    ax[0].set_title("Game Difficulty")
+    ax[0].set_title("Game Difficulty", fontsize=TITLE_SIZE, fontweight="bold")
+    ax[0].tick_params(axis='both', which='major', labelsize=AXIS_SIZE)
 
     ax[1].axvline(0, c="darkgrey", linestyle="--")
     ax[1].errorbar(y="clean_name", x="coef", xerr="error", c="white", data=metrics, ecolor="grey", fmt="none" )
     ax[1].scatter(y="clean_name", x="coef", data=metrics, s=120, marker="s", c="coef", norm=colors.CenteredNorm(), cmap="RdYlGn_r")
     ax[1].xaxis.set_tick_params(which='both', labelbottom=True)
-    ax[1].set_title("Article Metrics")
+    ax[1].set_title("Article Metrics", fontsize=TITLE_SIZE, fontweight="bold")
+    ax[1].tick_params(axis='both', which='major', labelsize=AXIS_SIZE)
 
     ax[2].axvline(0, c="darkgrey", linestyle="--")
     ax[2].errorbar(y="clean_name", x="coef", xerr="error", c="white", data=start, ecolor="grey", fmt="none" )
     ax[2].scatter(y="clean_name", x="coef", data=start, s=120, marker="s", c="coef", norm=colors.CenteredNorm(), cmap="RdYlGn_r")
     ax[2].xaxis.set_tick_params(which='both', labelbottom=True)
-    ax[2].set_title("Starting Categories")
+    ax[2].set_title("Starting Categories", fontsize=TITLE_SIZE, fontweight="bold")
+    ax[2].tick_params(axis='both', which='major', labelsize=AXIS_SIZE)
 
     ax[3].axvline(0, c="darkgrey", linestyle="--")
-    ax[3].errorbar(y="clean_name", x="coef", xerr="error", c="white", data=target, ecolor="grey", fmt="none" )
     ax[3].scatter(y="clean_name", x="coef", data=target, s=120, marker="s", c="coef", norm=colors.CenteredNorm(), cmap="RdYlGn_r")
+    ax[3].errorbar(y="clean_name", x="coef", xerr="error", c="white", data=target, ecolor="grey", fmt="none" )
     ax[3].xaxis.set_tick_params(which='both', labelbottom=True)
-    ax[3].set_title("Target Categories")
+    ax[3].set_title("Target Categories", fontsize=TITLE_SIZE, fontweight="bold")
+    ax[3].tick_params(axis='both', which='major', labelsize=AXIS_SIZE)
 
     plt.tight_layout()
 

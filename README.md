@@ -32,7 +32,7 @@ In a preliminary data exploration, we noticed the following:
 
 ### 2. Individual analyses
 
-To prepare our data for the overall statistical analysis, we calculate and analyse a range of metrics regarding each of our four research subquestions. Please refer to our notebook for details. We use the empirical probability to estimate frequencies in our data. Note that we considered using the Good-Turing Estimator, but decided against it as it was not applicable in our cases (in our opinion according and according to our experiments.)
+To prepare our data for the overall statistical analysis, we calculate and analyse a range of metrics regarding each of our four research subquestions. Please refer to our notebook for details. We use the empirical probability to estimate frequencies in our data. Note that we considered using the Good-Turing Estimator, but decided against it as it was not applicable in our cases (in our opinion and according to our experiments.)
 
   1. ***Research Subquestion 1: Categories***
 
@@ -56,11 +56,11 @@ To prepare our data for the overall statistical analysis, we calculate and analy
 
 ### 3. Putting everything together: Logistic Regression
 
-To reach a conclusion for our datastory, we build a logistic regression model. This allows us to synthesise the above analysis output a probability to predict if a game will be finished or abandoned. This allows us to control for all factors and measure the relative strength of the effects (after standardisation). From the output, we can discuss statistically significant predictors and derive implications.
+To reach a conclusion for our datastory, we build a logistic regression model. This allows us to synthesise the above analysis by outputting a probability predicting if a game will be finished or abandoned. It also enables us to control for all factors and measure the relative strength of the effects (after standardisation). From the output, we can discuss statistically significant predictors and derive implications.
 
 ### 4. Expanding upon the model: Machine Learning
 
-We expand upon the logistic regression model by training a Random Forest model which considers non-linearities and interaction effects. This model allows us to reach a level of predictive performance with an F1-score of 0.6525 and an accuracy 0f 0.65 (on the data subset containing paths after 2011). More importantly, it allows us to use Shapley values (Shapley, 1953; see e.g., [Molnar, 2019](https://christophm.github.io/interpretable-ml-book/shapley.html) for a good introduction) to better understand the real contributions of different factors to the probability of completion of a game according to the model.
+We expand upon the logistic regression model by training a Random Forest model which considers non-linearities and interaction effects. This model allows us to reach a level of predictive performance with an F1-score of 0.6525 and an accuracy of 0.65 (on the data subset containing paths after 2011). More importantly, it allows us to use Shapley values (Shapley, 1953; see e.g., [Molnar, 2019](https://christophm.github.io/interpretable-ml-book/shapley.html) for a good introduction) to better understand the real contributions of different factors to the probability of completion of a game according to the model.
 
 ## Proposed timeline and internal milestones
 Our timeline and planned milestone are split across the two work streams on *Analysis* and *Data Story*:
